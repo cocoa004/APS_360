@@ -2,5 +2,5 @@
 .DS_Store
 
 # Do not want to push the original data to the repo
-Kaggle_Data/Alzheimer_Data
+#Kaggle_Data/Alzheimer_Data
 Kaggle_Data/OASIS_Data
