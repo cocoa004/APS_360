@@ -61,6 +61,10 @@ def augment(original_dir, specifics):
                 elif params['name'] == 'original':
                     augmented_image = original_image
 
+
+                augmented_image = augmented_image.resize(original_image.size)
+                 
+                 
                 # Save the augmented image
                 augmented_filename = os.path.splitext(filename)[0] + '_' + params['name'] + '.jpg'
                 augmented_image.save(os.path.join(augmented_dir, augmented_filename))
