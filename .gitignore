@@ -8,3 +8,7 @@ Kaggle_Data/OASIS_Data/
 # Do not want to push data to be augmented
 NeedtoAugmentData/Mild-Demented/
 NeedtoAugmentData/Non-Demented/
+
+# Do not want to push augmented data
+augmented/not_demented/
+augmented/mild_demented/
