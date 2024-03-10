@@ -13,10 +13,10 @@ Please note that the input to the function must be the folder name
 # '''
 
 # Directory name for original non-dementia files
-no_dem = ''
+no_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
 
 # Directory name for origianl non-dementia files
-mild_dem = ''
+mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
 
 
 
