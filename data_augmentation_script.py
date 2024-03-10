@@ -22,7 +22,20 @@ Please note that the input to the function must be the folder name
 no_dem = '/Users/matthew/Desktop/APS_360/Alzheimer_s Dataset/test/MildDemented'
 mild_dem = '/Users/matthew/Desktop/APS_360/Alzheimer_s Dataset/test/MildDemented'
 
+def find_dim(path): 
+    
+    for filename in os.listdir(path):
+        width_max = 0
+        height_max = 0
+        width, height = filename.size
 
+        if width > width_max: 
+            width_max = width
+        if height > height_max: 
+            hieght_max = height
+    
+    dim = max(width, height)
+    return dim
 
 def augment(original_dir, specifics):
 
@@ -30,7 +43,7 @@ def augment(original_dir, specifics):
     os.makedirs(f'augmented/{specifics}')
     augmented_dir = os.path.abspath(f'augmented/{specifics}')
     
-
+    dim = find_dim(original_dir)
     # Dictionary with augmentation methods
     augmentation_params = [
         {'name': 'rotate'},
@@ -70,6 +83,18 @@ def augment(original_dir, specifics):
                     augmented_image = original_image
                     augmented_image = augmented_image.resize(original_image.size)
 
+                width, height = augmented_image.size
+    
+                # Calculate the padding sizes
+                pad_width = max(dim - width, 0)
+                pad_height = max(dim - height, 0)
+                
+                # Calculate the padding parameters (left, top, right, bottom)
+                padding = (0, 0, pad_width, pad_height)
+                
+                # Add padding to the image
+                padded_image = Image.new(augmented_image.mode, [dim, dim], color='white')  # You can set the color as you want
+                padded_image.paste(augmented_image, padding)
 
                 # Save the augmented image
                 augmented_filename = os.path.splitext(filename)[0] + '_' + params['name'] + '.jpg'
