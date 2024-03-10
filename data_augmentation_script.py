@@ -23,8 +23,8 @@ mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
 def augment(original_dir, specifics):
 
     # Create folder for augmented photos
-    os.mkdir('augmented_' + specifics)
-    augmented_dir = os.path.abspath('augmented_' + specifics)
+    os.makedirs(f'augmented/{specifics}')
+    augmented_dir = os.path.abspath(f'augmented/{specifics}')
     
 
     # Dictionary with augmentation methods
