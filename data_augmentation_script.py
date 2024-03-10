@@ -31,7 +31,8 @@ def augment(original_dir, specifics):
     augmentation_params = [
         {'name': 'rotate'},
         {'name': 'gaussian_blur'},
-        {'name': 'brightness_enhancer'}
+        {'name': 'brightness_enhancer', 
+         'name': 'original'}
     ]
     # Iterate through each image
     for filename in os.listdir(original_dir):
@@ -56,6 +57,9 @@ def augment(original_dir, specifics):
                     brightness_enhancer = ImageEnhance.Brightness(original_image)
                     # Enhance the brightness by a factor of 8 (dramatically increases brightness)
                     augmented_image = brightness_enhancer.enhance(1.4)
+                    
+                elif params['name'] == 'original':
+                    augmented_image = original_image
 
                 # Save the augmented image
                 augmented_filename = os.path.splitext(filename)[0] + '_' + params['name'] + '.jpg'
