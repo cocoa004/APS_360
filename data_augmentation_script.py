@@ -28,18 +28,18 @@ mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
 
 def find_dim(path): 
     
+    width_max = 0
+    height_max = 0
     for filename in os.listdir(path):
         image = Image.open(os.path.join(path, filename))
-        width_max = 0
-        height_max = 0
+        
         width, height = image.size
-
         if width > width_max: 
             width_max = width
         if height > height_max: 
             height_max = height
     
-    dim = max(width, height)
+    dim = max(width_max, height_max)
     return dim
 
 def augment(original_dir, specifics):
@@ -77,7 +77,7 @@ def augment(original_dir, specifics):
             
             
             # Create blank image with just the padding
-            padded_image = Image.new(original_image.mode, (dim, dim), color='white') # Here Might change to black if yields better training results
+            padded_image = Image.new(original_image.mode, (dim, dim), color='black') # Here Might change to black if yields better training results
             
             # Paste the original image onto the padded image
             padded_image.paste(original_image, (pad_width//2//2,pad_height//2))
@@ -95,7 +95,6 @@ def augment(original_dir, specifics):
                 # apply a slight blur
                 elif params['name'] == 'gaussian_blur':
                     augmented_image = padded_image.filter(ImageFilter.GaussianBlur(radius=1.5))
-                    augmented_image = augmented_image.resize(padded_image.size)
 
                 # apply a 40% increase in brightness
                 elif params['name'] == 'brightness_enhancer': 
@@ -103,11 +102,9 @@ def augment(original_dir, specifics):
                     brightness_enhancer = ImageEnhance.Brightness(padded_image)
                     # Enhance the brightness by a factor of 8 (dramatically increases brightness)
                     augmented_image = brightness_enhancer.enhance(1.4)
-                    augmented_image = augmented_image.resize(padded_image.size)
                     
                 elif params['name'] == 'original':
                     augmented_image = padded_image
-                    augmented_image = augmented_image.resize(padded_image.size)
 
         
                 # Save the augmented image
