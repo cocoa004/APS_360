@@ -10,5 +10,5 @@ NeedtoAugmentData/Mild-Demented/
 NeedtoAugmentData/Non-Demented/
 
 # Do not want to push augmented data
-augmented/not_demented/
-augmented/mild_demented/
+augmented/not_dementia/
+augmented/mild_dementia/
