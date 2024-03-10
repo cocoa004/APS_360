@@ -4,7 +4,7 @@ import shutil
 
 # Requires Alzheimer_Data.zip from https://www.kaggle.com/datasets/tourist55/alzheimers-dataset-4-class-of-images
 # Requires OASIS_Data.zip from https://www.kaggle.com/datasets/ninadaithal/imagesoasis
-# Must be put into Alzheimer_Data and OASIS_Data folders respectively
+# Must be put into Kaggle_Data/Alzheimer_Data and Kaggle_Data/OASIS_Data folders respectively
 
 def alzheimer_collect_data():
     # Put all mild demented Alzheimer data together
@@ -81,10 +81,6 @@ def move_data(path):
     else:
         more_mild = False
 
-    # Setup mild and non-demented training paths
-    mild_train_path = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
-    non_dem_train_path = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
-
     # Loop through and add equal amounts of mild and non-demented training data
     if more_mild == True:
         for i in range(len(non_dem)):
@@ -118,6 +114,14 @@ if __name__ == "__main__":
 
     # Group OASIS data together
     oasis_collect_data()
+
+    # Create directories to place data to be augmented
+    mild_train_path = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
+    non_dem_train_path = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
+    if not os.path.exists(mild_train_path):
+        os.makedirs(mild_train_path)
+    if not os.path.exists(non_dem_train_path):
+        os.makedirs(non_dem_train_path)
 
     # Separate data to be augmented
     move_data(alzheimer_data_path)
