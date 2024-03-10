@@ -3,8 +3,8 @@ import os
 import shutil
 
 # Requires Alzheimer_Data.zip from https://www.kaggle.com/datasets/tourist55/alzheimers-dataset-4-class-of-images
-# Requires OASIS_Data.zip from https://www.kaggle.com/datasets/ninadaithal/imagesoasis
-# Must be put into Kaggle_Data/Alzheimer_Data and Kaggle_Data/OASIS_Data folders respectively
+# Requires MRI_Data.zip from https://www.kaggle.com/datasets/sachinkumar413/alzheimer-mri-dataset
+# Must be put into Kaggle_Data/Alzheimer_Data and Kaggle_Data/MRI_Data folders respectively
 
 def alzheimer_collect_data():
     # Put all mild demented Alzheimer data together
@@ -34,7 +34,7 @@ def alzheimer_collect_data():
     
 
     # Put all non demented Alzheimer data together
-    non_dem_path = os.path.join(os.getcwd(), "Kaggle_Data/Alzheimer_Data/Non Demented")
+    non_dem_path = os.path.join(os.getcwd(), "Kaggle_Data/Alzheimer_Data/NonDemented")
     if not os.path.exists(non_dem_path):
         os.makedirs(non_dem_path)
 
@@ -48,28 +48,36 @@ def alzheimer_collect_data():
     for i in os.listdir(path2):
         shutil.copy(os.path.join(path2, i), non_dem_path)
 
-def oasis_collect_data():
+def mri_collect_data():
     # Put all mild demented Alzheimer data together
-    mild_dem_path = os.path.join(os.getcwd(), "Kaggle_Data/OASIS_Data/Mild")
+    mild_dem_path = os.path.join(os.getcwd(), "Kaggle_Data/MRI_Data/Mild")
     if not os.path.exists(mild_dem_path):
         os.makedirs(mild_dem_path)
 
     # Path 1
-    path1 = os.path.join(oasis_data_path, "Mild Dementia")
+    path1 = os.path.join(mri_data_path, "Dataset/Mild_Demented")
     for i in os.listdir(path1):
         shutil.copy(os.path.join(path1, i), mild_dem_path)
 
     # Path 2
-    path2 = os.path.join(oasis_data_path, "Very mild Dementia")
+    path2 = os.path.join(mri_data_path, "Dataset/Very_Mild_Demented")
     for i in os.listdir(path2):
         shutil.copy(os.path.join(path2, i), mild_dem_path)
 
-    # Non demented is already grouped together
+    # Move non demented to another folder that is easier to access
+    non_dem_path = os.path.join(os.getcwd(), "Kaggle_Data/MRI_Data/NonDemented")
+    if not os.path.exists(non_dem_path):
+        os.makedirs(non_dem_path)
+
+    # Path 1
+    path1 = os.path.join(mri_data_path, "Dataset/Non_Demented")
+    for i in os.listdir(path1):
+        shutil.copy(os.path.join(path1, i), non_dem_path)
         
 def move_data(path):
     # Setup mild and non-demented paths
     mild_path = os.path.join(path, "Mild")
-    non_dem_path = os.path.join(path, "Non Demented")
+    non_dem_path = os.path.join(path, "NonDemented")
 
     # Get lists of both directories
     mild = os.listdir(mild_path)
@@ -95,25 +103,25 @@ def move_data(path):
 if __name__ == "__main__":
     # Set up path to unzip data
     alzheimer_data_path = os.path.join(os.getcwd(), "Kaggle_Data/Alzheimer_Data")
-    oasis_data_path = os.path.join(os.getcwd(), "Kaggle_Data/OASIS_Data")
+    mri_data_path = os.path.join(os.getcwd(), "Kaggle_Data/MRI_Data")
 
     # Paths of zip files
     alzheimer_datazip_path = os.path.join(alzheimer_data_path, "Alzheimer_Data.zip")
-    oasis_datazip_path = os.path.join(oasis_data_path, "OASIS_Data.zip")
+    mri_datazip_path = os.path.join(mri_data_path, "MRI_Data.zip")
 
     # Unzip Alzheimer's Data
     with zipfile.ZipFile(alzheimer_datazip_path, 'r') as zip_ref:
         zip_ref.extractall(alzheimer_data_path)
 
-    # Unzip OASIS Data
-    with zipfile.ZipFile(oasis_datazip_path, 'r') as zip_ref:
-        zip_ref.extractall(oasis_data_path)
+    # Unzip MRI Data
+    with zipfile.ZipFile(mri_datazip_path, 'r') as zip_ref:
+        zip_ref.extractall(mri_data_path)
 
     # Group Alzheimer data together
     alzheimer_collect_data()
 
-    # Group OASIS data together
-    oasis_collect_data()
+    # Group MRI data together
+    mri_collect_data()
 
     # Create directories to place data to be augmented
     mild_train_path = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
@@ -125,4 +133,4 @@ if __name__ == "__main__":
 
     # Separate data to be augmented
     move_data(alzheimer_data_path)
-    move_data(oasis_data_path)
+    move_data(mri_data_path)
