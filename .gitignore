@@ -2,7 +2,9 @@
 .DS_Store
 
 # Do not want to push the original data to the repo
-Kaggle_Data/Alzheimer_Data
-Kaggle_Data/OASIS_Data
-# ignoring alzheimers dataset
-Alzheimer_s Dataset
+Kaggle_Data/Alzheimer_Data/
+Kaggle_Data/OASIS_Data/
+
+# Do not want to push data to be augmented
+NeedtoAugmentData/Mild-Demented/
+NeedtoAugmentData/Non-Demented/
