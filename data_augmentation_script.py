@@ -1,5 +1,6 @@
 from PIL import Image, ImageFilter, ImageEnhance
 import os
+import numpy as np
 
 ''' 
 
@@ -12,11 +13,14 @@ Please note that the input to the function must be the folder name
 
 # '''
 
-# Directory name for original non-dementia files
-no_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
+# # Directory name for original non-dementia files
+# no_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
 
-# Directory name for origianl non-dementia files
-mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
+# # Directory name for origianl non-dementia files
+# mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
+
+no_dem = '/Users/matthew/Desktop/APS_360/Alzheimer_s Dataset/test/MildDemented'
+mild_dem = '/Users/matthew/Desktop/APS_360/Alzheimer_s Dataset/test/MildDemented'
 
 
 
@@ -46,10 +50,13 @@ def augment(original_dir, specifics):
             for params in augmentation_params:
                 if params['name'] == 'rotate':
                     augmented_image = original_image.rotate(90)
+                    swapped = np.swapaxes(original_image, 0, 1)
+                    augmented_image = augmented_image.resize(swapped.size)
                     
                 # apply a slight blur
                 elif params['name'] == 'gaussian_blur':
                     augmented_image = original_image.filter(ImageFilter.GaussianBlur(radius=1.5))
+                    augmented_image = augmented_image.resize(original_image.size)
 
                 # apply a 40% increase in brightness
                 elif params['name'] == 'brightness_enhancer': 
@@ -57,14 +64,13 @@ def augment(original_dir, specifics):
                     brightness_enhancer = ImageEnhance.Brightness(original_image)
                     # Enhance the brightness by a factor of 8 (dramatically increases brightness)
                     augmented_image = brightness_enhancer.enhance(1.4)
+                    augmented_image = augmented_image.resize(original_image.size)
                     
                 elif params['name'] == 'original':
                     augmented_image = original_image
+                    augmented_image = augmented_image.resize(original_image.size)
 
 
-                augmented_image = augmented_image.resize(original_image.size)
-                 
-                 
                 # Save the augmented image
                 augmented_filename = os.path.splitext(filename)[0] + '_' + params['name'] + '.jpg'
                 augmented_image.save(os.path.join(augmented_dir, augmented_filename))
