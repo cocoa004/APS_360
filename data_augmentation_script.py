@@ -2,27 +2,10 @@ from PIL import Image, ImageFilter, ImageEnhance
 import os
 import numpy as np
 
-''' 
-
-Please note that the input to the function must be the folder name
-# of the respected image classes
-
-# Example: 
-
-# original_dir = 'original_images/'
-
-# '''
-
-# # Directory name for original non-dementia files
-# no_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
-
-# # Directory name for origianl non-dementia files
-# mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
-
 # Directory name for original non-dementia files
 no_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Non-Demented")
 
-# Directory name for origianl non-dementia files
+# Directory name for original non-dementia files
 mild_dem = os.path.join(os.getcwd(), "NeedtoAugmentData/Mild-Demented")
 
 
