@@ -83,7 +83,7 @@ def augment(original_dir, specifics):
                 elif params['name'] == 'brightness_enhancer': 
                     # Create a brightness enhancer object
                     brightness_enhancer = ImageEnhance.Brightness(padded_image)
-                    # Enhance the brightness by a factor of 8 (dramatically increases brightness)
+                    # Enhance the brightness by a factor of 40% (dramatically increases brightness)
                     augmented_image = brightness_enhancer.enhance(1.4)
                     
                 elif params['name'] == 'original':
